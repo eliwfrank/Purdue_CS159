@@ -22,6 +22,7 @@ int getDay(int, int);
 int calcDays(int, int);
 void outMonth(int, int, int);
 int calcDifference(int, int, int, int, int);
+int days_since_zero(int, int, int);
 void outTotal(int, int);
 
 int main(void)
@@ -238,69 +239,68 @@ void outMonth(int month_num, int day, int condition)
 *  Parameters (list data type, name, and comment one per line):
 *    1. int month_1 - first month
 *    2. int month_2 - second month
-*    3. int days_1 - first day input
-*    4. int days_2 - second day input
+*    3. int day_1 - first day input
+*    4. int day_2 - second day input
 *    5. int year - year
 *
 *  Function Description: This function calculates the difference between dates 
-*  in days using fall-through switch statements.
+*  by calling the fall-through switch structure in the days_since_zero function.
 *
 ******+----*-*--**---**-*---*---*-*---******-*--***************************/
-int calcDifference(int month_1, int month_2, int days_1, int days_2, int year)
+int calcDifference(int month_1, int month_2, int day_1, int day_2, int year)
 {
-  switch (month_1 - 1) //fall-through switch statement to determine number of days from Jan 1
+  day_1 = days_since_zero(day_1, month_1, year);
+  day_2 = days_since_zero(day_2, month_2, year);
+
+  return abs(day_2 - day_1); //calculating difference of both numbers
+}
+
+/*****+----*-*--**---**-*---*---*-*---******-*--****************************
+*
+*  Function Information
+*
+*  Name of Function: days_since_zero
+*
+*  Function Return Type: int
+*
+*  Parameters (list data type, name, and comment one per line):
+*    1. int day - day inputted by user
+*    2. int month - month inputted by user
+*    3. int year - year inputted by user
+*
+*  Function Description: This function uses a fall-through switch structure
+*  to calculate the number of days from Janurary first.
+*
+******+----*-*--**---**-*---*---*-*---******-*--***************************/
+int days_since_zero(int day, int month, int year)
+{
+  switch(month - 1)
   {
-    case 11:
-      days_1 += 30;
-    case 10:
-      days_1 += 31;
-    case 9:
-      days_1 += 30;
-    case 8:
-      days_1 += 31;
-    case 7:
-      days_1 += 31;
-    case 6:
-      days_1 += 30;
-    case 5:
-      days_1 += 31;
-    case 4:
-      days_1 += 30;
-    case 3:
-      days_1 += 31;
-    case 2:
-      days_1 += 28 + ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0)));
-    case 1:
-      days_1 += 31;
+    case 11 :
+	  day += 30;
+	case 10 :
+	  day += 31;
+	case 9 :
+	  day += 30;
+	case 8 :
+	  day += 31;
+	case 7 :
+	  day += 31;
+	case 6 :
+	  day += 30;
+	case 5 :
+	  day += 31;
+	case 4 :
+	  day += 30;
+	case 3 :
+	  day += 31;
+	case 2 :
+	  day += 28 + ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0)));
+	case 1 :
+	  day += 31;
   }
 
-  switch (month_2 - 1) //fall-through switch statement to determine number of days from Jan 1
-  {
-    case 11:
-      days_2 += 30;
-    case 10:
-      days_2 += 31;
-    case 9:
-      days_2 += 30;
-    case 8:
-      days_2 += 31;
-    case 7:
-      days_2 += 31;
-    case 6:
-      days_2 += 30;
-    case 5:
-      days_2 += 31;
-    case 4:
-      days_2 += 30;
-    case 3:
-      days_2 += 31;
-    case 2:
-      days_2 += 28 + ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0)));
-    case 1:
-      days_2 += 31;
-  }
-
-  return abs(days_2 - days_1); //calculating difference of both numbers
+  return day;
 }
 
 /*****+---**-*---*---**-*---*---*-*---******-*--****************************
